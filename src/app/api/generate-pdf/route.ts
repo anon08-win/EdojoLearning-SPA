@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     });
 
     await page.emulateMediaType('print');
-    
+
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
       console.warn('Storage upload failed (optional):', storageErr);
     }
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(new Uint8Array(pdfBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="SPA_Report_${result.studentInfo.studentName.replace(/\s+/g, '_')}.pdf"`,
