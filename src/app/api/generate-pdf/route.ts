@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { generateReportHTML } from '@/lib/report-template';
 import { createAdminClient } from '@/lib/supabase';
 import type { SPAResult } from '@/types/spa';
-import chromium from '@sparticuz/chromium-min';
+import chromium from '@sparticuz/chromium';
 import puppeteer from 'puppeteer-core';
 
 export async function POST(req: NextRequest) {
   try {
-    
+
 
     const { result }: { result: SPAResult } = await req.json();
 
