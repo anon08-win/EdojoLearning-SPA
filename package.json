@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@sparticuz/chromium-min": "^148.0.0",
+    "@sparticuz/chromium": "^148.0.0",
     "@supabase/supabase-js": "^2.43.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.9",
