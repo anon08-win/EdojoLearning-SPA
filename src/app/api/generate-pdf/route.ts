@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { generateReportHTML } from '@/lib/report-template';
 import { createAdminClient } from '@/lib/supabase';
 import type { SPAResult } from '@/types/spa';
+import chromium from '@sparticuz/chromium';
+import puppeteer from 'puppeteer-core';
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,21 +13,18 @@ export async function POST(req: NextRequest) {
     const html = generateReportHTML(result);
 
     // Dynamic import of puppeteer (server-side only)
-    const puppeteer = await import('puppeteer');
-    const browser = await puppeteer.default.launch({
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: {
+        width: 1280,
+        height: 720,
+      },
+      executablePath: await chromium.executablePath(),
       headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-      ],
     });
     const page = await browser.newPage();
 
-    await page.setContent(html, {
-       waitUntil: 'networkidle0',
-    });
+    await page.setContent(html);
 
     await page.emulateMediaType('print');
 
