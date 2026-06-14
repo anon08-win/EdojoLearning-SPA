@@ -8,7 +8,7 @@ import { clsx } from 'clsx';
 interface Props {
   step: FormStep;
   stepIndex: number;
-  formData: Record<string, unknown>;
+  formData: any;
   updateField: (field: string, value: unknown) => void;
   onNext: () => void;
   onBack: () => void;
