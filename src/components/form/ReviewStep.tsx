@@ -7,7 +7,7 @@ import type { FormAnswers, StudentInfo } from '@/types/spa';
 type FormData = StudentInfo & { answers: Partial<FormAnswers> };
 
 interface Props {
-  formData: FormData;
+  formData: any;
   onBack: () => void;
   onSubmit: () => void;
   error: string | null;
@@ -16,9 +16,9 @@ interface Props {
 export default function ReviewStep({ formData, onBack, onSubmit, error }: Props) {
   const getValue = (id: string) => {
     if (['studentName', 'class', 'schoolName', 'parentName', 'parentContact', 'studentEmail'].includes(id)) {
-      return (formData as Record<string, unknown>)[id] as string || '—';
+       return formData[id] || '—';
     }
-    const val = (formData.answers as Record<string, unknown>)[id];
+    const val = formData.answers?.[id];
     if (Array.isArray(val)) return val.join(', ') || '—';
     if (typeof val === 'boolean') return val ? 'Yes' : 'No';
     return (val as string) || '—';
